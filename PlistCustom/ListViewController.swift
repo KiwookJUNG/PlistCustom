@@ -81,6 +81,15 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
         self.married.isOn = plist.bool(forKey: "married")
         self.gender.selectedSegmentIndex = plist.integer(forKey: "gender")
         
+        // "accountList"키로 저장도니 값을 읽어온다. 저장된 값이 없을 경우 새로운 배열객체를 생성
+        let accountList = plist.array(forKey: "accountList") as? [String] ?? [String]()
+        // 읽어온 값을 멤버 변수 self.accountList에 대입해준다( 이메일 저장소 )
+        self.accountList = accountList
+        
+        // "selectedAccount" 키로 저장된 값을 읽어온다.
+        if let account = plist.string(forKey: "selectedAccount"){
+            self.account.text = account // 값이 있을 경우 account 텍스트 필드의 값으로 대입한다.
+        }
     }
     
     // 생성할 컴포넌트의 개수를 정의합니다. (보통은 1개지만 3개 이하까지는 할 수 있다. )
