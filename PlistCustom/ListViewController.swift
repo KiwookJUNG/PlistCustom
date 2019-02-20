@@ -185,9 +185,22 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
                 //사용자가 OK 버튼을 누르면 입력 필드에 입력된 값을 저장한다.
                 let value = alert.textFields?[0].text
                 
-                let plist = UserDefaults.standard // 기본 저장소를 가져온다.
-                plist.setValue(value, forKey: "name") // "name"이라는 키로 값을 저장한다.
-                plist.synchronize() // 동기화 처리
+//                let plist = UserDefaults.standard // 기본 저장소를 가져온다.
+//                plist.setValue(value, forKey: "name") // "name"이라는 키로 값을 저장한다.
+//                plist.synchronize() // 동기화 처리
+                // UserDefaults 가 아닌 커스텀 프로퍼티 리스트로 대체하는 새로운 저장로직을 추가한다.
+                // 저장 로직 시작
+                
+                let customPlist = "\(self.account.text!).plist" // 읽어올 파일명
+                
+                let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+                let path = paths[0] as NSString
+                let plist = path.strings(byAppendingPaths: [customPlist]).first!
+                let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary()
+                
+                data.setValue(value, forKey: "name")
+                data.write(toFile: plist, atomically: true)
+                
                 
                 self.name.text = value
                 
