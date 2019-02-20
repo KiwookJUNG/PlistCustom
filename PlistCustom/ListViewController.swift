@@ -111,6 +111,11 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
         
         // 2. 입력 뷰를 닫음
         // self.view.endEditing(true)
+        
+        // 사용자가 계정을 생헝하면 이 계정을 선택한 것으로 간주하고 저장
+        let plist = UserDefaults.standard
+        plist.set(account, forKey: "selectedAccount")
+        plist.synchronize()
     }
     
     @objc func pickerDone(_ sender: Any){
