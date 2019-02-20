@@ -19,17 +19,42 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
     @IBAction func changeGender(_ sender: UISegmentedControl) {
         let value = sender.selectedSegmentIndex // 0이면 남자, 1이면 여자
         
-        let plist = UserDefaults.standard // 기본 저장소 객체를 가져온다.
-        plist.set(value, forKey: "gender") // "gender" 라는 키로 값을 저장한다.
-        plist.synchronize() // 동기화 처리
+//        let plist = UserDefaults.standard // 기본 저장소 객체를 가져온다.
+//        plist.set(value, forKey: "gender") // "gender" 라는 키로 값을 저장한다.
+//        plist.synchronize() // 동기화 처리
+        
+        // 저장 로직 시작
+        let customPlist = "\(self.account.text!).plist" // 읽어올 파일명
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        
+        let path = paths[0] as NSString
+        let plist = path.strings(byAppendingPaths: [customPlist]).first!
+        let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary()
+        
+        data.setValue(value, forKey: "gender")
+        data.write(toFile: plist, atomically: true)
     }
     
     @IBAction func changeMarried(_ sender: UISwitch) {
         let value = sender.isOn // true면 기혼, false면 미혼
         
-        let plist = UserDefaults.standard // 기본 저장소 객체를 가져온다.
-        plist.set(value, forKey: "married")
-        plist.synchronize()
+//        let plist = UserDefaults.standard // 기본 저장소 객체를 가져온다.
+//        plist.set(value, forKey: "married")
+//        plist.synchronize()
+        
+        // 저장 로직 시작
+        let customPlist = "\(self.account.text!).plist" // 읽어 올 파일명
+        
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        let path = paths[0] as NSString
+        let plist = path.strings(byAppendingPaths: [customPlist]).first!
+        let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary()
+        
+        data.setValue(value, forKey: "married")
+        data.write(toFile: plist, atomically: true)
+        
+        print("custom plist= \(plist)")
     }
     
     
@@ -89,7 +114,11 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
         // "selectedAccount" 키로 저장된 값을 읽어온다.
         if let account = plist.string(forKey: "selectedAccount"){
             self.account.text = account // 값이 있을 경우 account 텍스트 필드의 값으로 대입한다.
+            
+            
         }
+        
+        
     }
     
     // 생성할 컴포넌트의 개수를 정의합니다. (보통은 1개지만 3개 이하까지는 할 수 있다. )
