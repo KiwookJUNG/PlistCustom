@@ -151,6 +151,7 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
                 let plist = UserDefaults.standard
                 
                 plist.set(self.accountList, forKey: "accountList")
+                plist.set(account, forKey: "selectedAccount")
                 plist.synchronize()
             }
         }))
