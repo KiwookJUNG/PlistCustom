@@ -16,6 +16,9 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var gender: UISegmentedControl!
     @IBOutlet var married: UISwitch!
     
+    // 메인 번들에 정의된 PList 내용을 저장할 딕셔너리
+    var defaultPList : NSDictionary!
+    
     @IBAction func changeGender(_ sender: UISegmentedControl) {
         let value = sender.selectedSegmentIndex // 0이면 남자, 1이면 여자
         
@@ -30,7 +33,7 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
         
         let path = paths[0] as NSString
         let plist = path.strings(byAppendingPaths: [customPlist]).first!
-        let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary()
+        let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary(dictionary: self.defaultPList)
         
         data.setValue(value, forKey: "gender")
         data.write(toFile: plist, atomically: true)
@@ -49,8 +52,8 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
         let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let path = paths[0] as NSString
         let plist = path.strings(byAppendingPaths: [customPlist]).first!
-        let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary()
-        
+        let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary(dictionary: self.defaultPList)
+            
         data.setValue(value, forKey: "married")
         data.write(toFile: plist, atomically: true)
         
@@ -62,6 +65,13 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
     var accountList = [String]()
     
     override func viewDidLoad() {
+        // 메인 번들에 UserInfo.plist가 포함되어 있으면 이를 읽어와 딕셔너리에 담는다.
+        if let defaultPListPath = Bundle.main.path(forResource: "UserInfo", ofType: "plist"){
+            // Bundle.main 속성은 앱의 메인 번들 리소스를 객체 형태로 제공한다.
+            // 메인 번들 리소스 객체에서 path 메소드를 호출하면 번들에 포함된 특정 파일의 경로를 가져올 수 있다.
+            self.defaultPList = NSDictionary(contentsOfFile: defaultPListPath)
+        }
+        
         let picker = UIPickerView() // 피커 뷰 인스턴스 생성
         
         // 피커 뷰의 델리게이트 객체 지정
@@ -133,6 +143,9 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
             self.gender.isEnabled = false
             self.married.isEnabled = false
         }
+        
+        let addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newAccount(_:)))
+        self.navigationItem.rightBarButtonItems = [addBtn]
         
     }
     
@@ -257,7 +270,7 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 let path = paths[0] as NSString
                 let plist = path.strings(byAppendingPaths: [customPlist]).first!
-                let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary()
+                let data = NSMutableDictionary(contentsOfFile: plist) ?? NSMutableDictionary(dictionary: self.defaultPList)
                 
                 data.setValue(value, forKey: "name")
                 data.write(toFile: plist, atomically: true)
