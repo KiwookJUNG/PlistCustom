@@ -115,6 +115,16 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
         if let account = plist.string(forKey: "selectedAccount"){
             self.account.text = account // 값이 있을 경우 account 텍스트 필드의 값으로 대입한다.
             
+            let customPlist = "\(account).plist" // 읽어올 파일명
+            // 2
+            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+            let path = paths[0] as NSString
+            let clist = path.strings(byAppendingPaths: [customPlist]).first!
+            let data = NSDictionary(contentsOfFile: clist)
+            
+            self.name.text = data?["name"] as? String
+            self.gender.selectedSegmentIndex = data?["gender"] as? Int ?? 0
+            self.married.isOn = data?["married"] as? Bool ?? false
             
         }
         
