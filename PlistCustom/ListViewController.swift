@@ -141,6 +141,12 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
                 self.name.text = ""
                 self.gender.selectedSegmentIndex = 0
                 self.married.isOn = false
+                
+                // 계정 목록을 통쩨로 자징한다.
+                let plist = UserDefaults.standard
+                
+                plist.set(self.accountList, forKey: "accountList")
+                plist.synchronize()
             }
         }))
         // 알림창 오픈
