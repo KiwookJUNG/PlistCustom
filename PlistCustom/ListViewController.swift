@@ -128,6 +128,11 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
             
         }
         
+        if (self.account.text?.isEmpty)! {
+            self.account.placeholder = "등록된 계정이 없습니다."
+            self.gender.isEnabled = false
+            self.married.isEnabled = false
+        }
         
     }
     
@@ -168,6 +173,20 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
     
     @objc func pickerDone(_ sender: Any){
         self.view.endEditing(true)
+        
+        if let _account = self.account.text {
+            let customPlist = "\(_account).plist" // 읽어올 파일명
+            
+            let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+            
+            let path = paths[0] as NSString
+            let clist = path.strings(byAppendingPaths: [customPlist]).first!
+            let data = NSDictionary(contentsOfFile: clist)
+            
+            self.name.text = data?["name"] as? String
+            self.gender.selectedSegmentIndex = data?["gender"] as? Int ?? 0
+            self.married.isOn = data?["married"] as? Bool ?? false
+        }
     }
     
     @objc func newAccount(_ sender: Any){
@@ -201,6 +220,9 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
                 plist.set(self.accountList, forKey: "accountList")
                 plist.set(account, forKey: "selectedAccount")
                 plist.synchronize()
+                
+                self.gender.isEnabled = true
+                self.married.isEnabled = true
             }
         }))
         // 알림창 오픈
@@ -209,7 +231,7 @@ class ListViewController : UITableViewController, UIPickerViewDelegate, UIPicker
 
   
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 1 { //두번째 셀이 클릭 되었을 떄에만
+        if indexPath.row == 1 && !(self.account.text?.isEmpty)! { //두번째 셀이 클릭 되었을 떄에만
             // 입력이 가능한 알림창을 띄워 이름을 수정 할 수 있도록 한다.
             
             let alert = UIAlertController(title: nil, message: "이름을 입력하세요", preferredStyle: .alert)
