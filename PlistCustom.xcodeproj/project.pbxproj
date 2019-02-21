@@ -13,6 +13,7 @@
 		A0DD58C5221D287A00F28654 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A0DD58C4221D287A00F28654 /* Assets.xcassets */; };
 		A0DD58C8221D287A00F28654 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0DD58C6221D287A00F28654 /* LaunchScreen.storyboard */; };
 		A0F6BBC6221D2D95006071E7 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0F6BBC5221D2D95006071E7 /* ListViewController.swift */; };
+		A0F79A54221D91D7001C3D3E /* UserInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F79A53221D91D7001C3D3E /* UserInfo.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A0DD58C7221D287A00F28654 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A0DD58C9221D287A00F28654 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0F6BBC5221D2D95006071E7 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		A0F79A53221D91D7001C3D3E /* UserInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = UserInfo.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				A0DD58BF221D287A00F28654 /* ViewController.swift */,
 				A0DD58C1221D287A00F28654 /* Main.storyboard */,
 				A0F6BBC5221D2D95006071E7 /* ListViewController.swift */,
+				A0F79A53221D91D7001C3D3E /* UserInfo.plist */,
 				A0DD58C4221D287A00F28654 /* Assets.xcassets */,
 				A0DD58C6221D287A00F28654 /* LaunchScreen.storyboard */,
 				A0DD58C9221D287A00F28654 /* Info.plist */,
@@ -128,6 +131,7 @@
 				A0DD58C8221D287A00F28654 /* LaunchScreen.storyboard in Resources */,
 				A0DD58C5221D287A00F28654 /* Assets.xcassets in Resources */,
 				A0DD58C3221D287A00F28654 /* Main.storyboard in Resources */,
+				A0F79A54221D91D7001C3D3E /* UserInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
